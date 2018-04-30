@@ -1,0 +1,9 @@
+
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /ping                           controllers.PingController.ping
+
+GET     /top10                          controllers.TopAuthorsController.top10(hashtag: String)
