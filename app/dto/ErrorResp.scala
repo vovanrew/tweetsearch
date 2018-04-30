@@ -2,7 +2,7 @@ package dto
 
 import play.api.libs.json.{Json, OWrites}
 
-case class ErrorResp(reason: String)
+case class ErrorResp(status: String = "failure", reason: String = "Sorry, something went wrong")
 
 object ErrorResp {
 
