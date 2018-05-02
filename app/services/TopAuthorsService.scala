@@ -3,7 +3,7 @@ package services
 import com.google.inject._
 import dto.Author
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Success
 
@@ -31,10 +31,15 @@ class TopAuthorsService @Inject() (tweetService: TweetService){
       }.toList
 
       //List[Future] to Future[List]
-      Future.sequence(authors)
+      sequenceIgnoringFailures(authors)
     }
 
     topAuthors
+  }
+
+  def sequenceIgnoringFailures[A](xs: List[Future[A]]): Future[List[A]] = {
+    val opts = xs.map(_.map(Some(_)).fallbackTo(Future(None)))
+    Future.sequence(opts).map(_.flatten)
   }
 
 }
