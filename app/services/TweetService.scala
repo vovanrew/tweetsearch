@@ -25,7 +25,7 @@ class TweetService /*@Inject()*/ (/*twitterClient: TwitterRestClient*/){
   def lastUsersTweet(userName: String): Future[Tweet] = {
     val lastTweet = twitterClient.userTimelineForUser(screen_name = userName, count = 1)
     val tweet = lastTweet.map(_.data.headOption match {
-      case Some(t) => println(t); t
+      case Some(t) => t
       case None => throw new NoSuchElementException
     })
 
